@@ -8,14 +8,17 @@ import TextArea from './components/textarea.js';
 import Twins from './components/ref.js';
 import Count from './components/lifecycle.js';
 import Toggle from './components/toggle.js';
-import MyRef from './components/createRef';
+// import MyRef from './components/createRef';
 // import LogControl from './components/logControl.js';
-// import NameForm from './components/form1.js';
+import NameForm from './components/form1.js';
 // import SelectForm from './components/form2.js';
 import Reservation from './components/form3.js';
 import RefDemo from './components/form4'
 import Temperature from './components/temperature';
 import SignUpDialog from './components/dialog';
+import List from './components/list';
+// import  ContainerUI from './components/store_test';
+import ContainerUI from './components/reduce_store_test';
 import './App.css';
 
 function App() {
@@ -25,16 +28,18 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <Button />
         <RefDemo />
+        <ContainerUI />
         <ShowInput />
         <Clock />
-        <MyRef />
+        <List />
+        {/* <MyRef /> */}
         <Count />
         <div id='lifecycle'></div>
         <TextArea />
         <Check/>
         <Twins/>
         <Toggle /> 
-        {/* <NameForm /> */}
+        <NameForm />
         {/* <SelectForm /> */}
         <Reservation />
         {/* <LogControl isLogIn={true}/> */}
