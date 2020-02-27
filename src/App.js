@@ -18,7 +18,8 @@ import Temperature from './components/temperature';
 import SignUpDialog from './components/dialog';
 import List from './components/list';
 // import  ContainerUI from './components/store_test';
-import ContainerUI from './components/flux_reduce_store';
+// import ContainerUI from './components/flux_reduce_store';
+import ContainerUI from './reflux/react_reflux';
 import './App.css';
 
 function App() {
