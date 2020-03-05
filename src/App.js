@@ -1,14 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
-// import NaviBar from './components/navi';
-import Clock from './pages/Clock.js';
-import Login from './pages/login';
-import UserList from './pages/users';
+// import logo from './logo.svg';
 
-import {BrowserRouter as Router,
-    Switch,
-    Route,
-    Link} from 'react-router-dom';
+import {Switch, Route, Link} from 'react-router-dom';
+import loadable from '@loadable/component';
 // import ShowInput from './components/showInput.js';
 // import Button from './components/Button.js';
 // import Check from './components/check.js';
@@ -30,9 +24,12 @@ import {BrowserRouter as Router,
 // import ContainerUI from './reflux/react_reflux';
 import {actions} from './redux/index';
 import { connect } from 'react-redux';
+import Clock from './pages/Clock';
+import UserList from './pages/users';
 import './App.css';
 // import Store from './data/store';
 
+const Login = loadable(() => import('./pages/login'));
 class App extends React.Component {
   render () {
     return (
@@ -59,35 +56,30 @@ class App extends React.Component {
           <SignUpDialog /> */}
         {/* </header> */}
         <main>
-          <Router>
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/">Login</Link>
-                </li>
-                <li>
-                  <Link to="/clock">Clock</Link>
-                </li>
-                <li>
-                  <Link to="/users">Users</Link>
-                </li>
-              </ul>
-            </nav>
-
-            {/* A <Switch> looks through its children <Route>s and
-                renders the first one that matches the current URL. */}
-            <Switch>
-              <Route path="/clock">
+          <nav>
+            <ul>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/clock">Clock</Link>
+              </li>
+              <li>
+                <Link to="/">Users</Link>
+              </li>
+            </ul>
+          </nav>
+          <Switch>
+            <Route path="/login" >
+              <Login />
+            </Route>
+            <Route path="/clock">
                 <Clock />
-              </Route>
-              <Route path="/users">
+            </Route>
+            <Route path="/">
                 <UserList />
-              </Route>
-              <Route path="/">
-                <Login />
-              </Route>
-            </Switch>
-          </Router>
+            </Route>
+          </Switch>
         </main>
       </div>
     );
