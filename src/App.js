@@ -1,7 +1,7 @@
 import React from 'react';
 // import logo from './logo.svg';
 
-import {Switch, Route, Link} from 'react-router-dom';
+import {Switch, Route, Link, NavLink, Redirect} from 'react-router-dom';
 import loadable from '@loadable/component';
 // import ShowInput from './components/showInput.js';
 // import Button from './components/Button.js';
@@ -29,9 +29,10 @@ import UserList from './pages/users';
 import './App.css';
 // import Store from './data/store';
 
+
 const Login = loadable(() => import('./pages/login'));
-class App extends React.Component {
-  render () {
+const BlogPost = loadable(() => import('./pages/blog'));
+function App () {
     return (
       <div className="App">
         {/* <header className="App-header"> */}
@@ -67,23 +68,27 @@ class App extends React.Component {
               <li>
                 <Link to="/">Users</Link>
               </li>
+              <li>
+                <NavLink to="/blog/hello">Blog</NavLink>
+              </li>
             </ul>
           </nav>
           <Switch>
-            <Route path="/login" >
+            <Route path="/login" exact>
               <Login />
             </Route>
-            <Route path="/clock">
+            <Route path="/clock" exact>
                 <Clock />
             </Route>
-            <Route path="/">
+            <Route path="/:name/:num" exact component={BlogPost} />
+            <Route path="/" exact>
                 <UserList />
             </Route>
+            <Redirect to='/'></Redirect>
           </Switch>
         </main>
       </div>
     );
-  }
 }
 
 
