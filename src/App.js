@@ -12,7 +12,7 @@ import loadable from '@loadable/component';
 // import Toggle from './components/toggle.js';
 // import MyRef from './components/createRef';
 // import LogControl from './components/logControl.js';
-// import NameForm from './components/form1.js';
+import NameForm from './components/form1.js';
 // import SelectForm from './components/form2.js';
 // import Reservation from './components/form3.js';
 // import RefDemo from './components/form4'
@@ -35,27 +35,27 @@ const BlogPost = loadable(() => import('./pages/blog'));
 function App () {
     return (
       <div className="App">
-        {/* <header className="App-header"> */}
+        <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          {/* <Button />
-          <RefDemo />
-          <ContainerUI /> */}
+          {/* <Button /> */}
           {/* <ShowInput /> */}
           {/* <List />  */}
+           {/* <Count /> */}
+           {/* <ContainerUI />  */}
+          {/* <div id='lifecycle'></div> */}
+          {/* <TextArea /> */}
+          {/* <Check/> */}
+          {/* <Twins/> */}
+          {/* <Toggle />  */}
+          {/* <RefDemo /> */}
           {/* <MyRef /> */}
-          {/* <Count />
-          <div id='lifecycle'></div>
-          <TextArea />
-          <Check/>
-          <Twins/>
-          <Toggle /> 
-          <NameForm /> */}
+          <NameForm />
           {/* <SelectForm /> */}
           {/* <Reservation /> */}
           {/* <LogControl isLogIn={true}/> */}
           {/* <Temperature scale='c' />
           <SignUpDialog /> */}
-        {/* </header> */}
+        </header>
         <main>
           <nav>
             <ul>
