@@ -29,7 +29,6 @@ import UserList from './pages/users';
 import './App.css';
 // import Store from './data/store';
 
-
 const Login = loadable(() => import('./pages/login'));
 const BlogPost = loadable(() => import('./pages/blog'));
 function App () {
@@ -69,7 +68,7 @@ function App () {
                 <Link to="/">Users</Link>
               </li>
               <li>
-                <NavLink to="/blog/hello">Blog</NavLink>
+                <NavLink to="/blog/727">Blog</NavLink>
               </li>
             </ul>
           </nav>
