@@ -1,44 +1,65 @@
-const Redux = require('redux'); 
+const Redux = require("redux");
 
 const reducer = function(state, action) {
-  if (typeof state === 'undefined') return {name:'input context', num: 0, url: 'login', users: [{name: 'alex'},{name: 'jack'}]};
+  if (typeof state === "undefined")
+    return {
+      name: "input context",
+      num: 0,
+      url: "login"
+    };
   switch (action.type) {
-    case 'changeName':
-      return Object.assign({}, state, {name: action.payload.name});
-    case 'access': 
-      return Object.assign({}, state, {num: ++state.num});
-    case 'link':
-      return Object.assign({}, state, {url: action.payload.url});
+    case "changeName":
+      return Object.assign({}, state, { name: action.payload.name });
+    case "access":
+      return Object.assign({}, state, { num: ++state.num });
+    case "link":
+      return Object.assign({}, state, { url: action.payload.url });
+    case "login":
+      let username = action.payload.username;
+      let password = action.payload.password;
+      let isLogin;
+      if (username === "123" && password === "123") {
+        isLogin = true;
+      } else {
+        isLogin = false;
+      }
+      return Object.assign({}, state, { isLogin });
     default:
       return state;
   }
-}
-const store = Redux.createStore(reducer);
+};
+const store = Redux.createStore(reducer, {isLogin: false, users: [{ name: "alex" }, { name: "jack" }]});
 
 let actions = {
-  changeName (name) {
+  changeName(name) {
     return {
-      type: 'changeName',
+      type: "changeName",
       payload: {
         name
       }
-    }
+    };
   },
-  access () {
+  access() {
     return {
-      type: 'access'
-    }
+      type: "access"
+    };
   },
-  link (url) {
+  link(url) {
     return {
-      type: 'link',
+      type: "link",
       payload: {
         url
       }
-    }
+    };
+  },
+  login(info) {
+    return {
+      type: "login",
+      payload: info
+    };
   }
-}
+};
 
 // store.subscribe(() => console.log(store.getState()));
 
-export {store, actions};
+export { store, actions };

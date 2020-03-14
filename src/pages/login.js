@@ -1,5 +1,7 @@
 import React from 'react';
-// import {actions} from '../redux/login';
+import {actions} from '../redux/index';
+import {connect} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 // import ReduxUI from '../redux/react-redux-connect';
 import { Form, Input, Button } from 'antd';
 import '../index.css';
@@ -9,24 +11,34 @@ const layout = {
     span: 8,
   },
   wrapperCol: {
-    span: 16,
+    span: 8,
   },
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
+    offset: 4,
     span: 16,
   },
 };
-class Login extends React.Component {
+function Login (props) {
+  const [form] = Form.useForm();
+  const history = useHistory();
 
-  onFinish(values) {
-    console.log(values);
+  const onFinish = function(e) {
+    props.login(e);
+    setTimeout(() => {
+      console.log(props.isLogin);
+      if (props.isLogin) {
+        history.push('/clock');
+      } else {
+        alert('登录失败')
+      }
+    }, 1000);
   };
 
-  // onReset() {
-  //   form.resetFields();
-  // };
+  const onReset = function() {
+    form.resetFields();
+  };
 
   // onFill() {
   //   form.setFieldsValue({
@@ -35,13 +47,12 @@ class Login extends React.Component {
   //   });
   // };
 
-  render () {
-    return <div>
-      用户名： <input />
+    return (<div>
+      {/* 用户名： <input />
       密码： <input />
-      <Button type="primary">nihao</Button>
+      <Button type="primary">nihao</Button> */}
       {/* <ReduxUI /> */}
-      <Form {...layout}  name="control-hooks" onFinish={this.onFinish}>
+      <Form {...layout}  form={form} name="control-hooks" onFinish={onFinish}>
         <Form.Item
           name="username"
           label="用户名"
@@ -62,19 +73,30 @@ class Login extends React.Component {
             },
           ]}
         >
-          <Input />
+          <Input.Password />
         </Form.Item>
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" >
             Submit
           </Button>
-          <Button htmlType="button">
+          <Button htmlType="button" onClick={onReset}>
             Reset
           </Button>
         </Form.Item>
       </Form>
-  </div>
-  }
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+  </div>)
 };
 
-export default Login;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    isLogin: state.isLogin,
+    name: state.name
+  }
+}
+export default connect(mapStateToProps, actions)(Login);

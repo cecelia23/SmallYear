@@ -1,7 +1,7 @@
 import React from 'react';
-// import logo from './logo.svg';
+import logo from './logo.svg';
 
-import {Switch, Route, Link, NavLink, Redirect} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import loadable from '@loadable/component';
 // import ShowInput from './components/showInput.js';
 // import Button from './components/Button.js';
@@ -22,25 +22,25 @@ import NameForm from './components/form1.js';
 // import  ContainerUI from './components/store_test';
 // import ContainerUI from './components/flux_reduce_store';
 // import ContainerUI from './reflux/react_reflux';
+import Sider from './components/menu';
 import {actions} from './redux/index';
 import { connect } from 'react-redux';
 import Clock from './pages/Clock';
 import UserList from './pages/users';
-import './App.css';
+import './App.less';
 // import Store from './data/store';
 
-const Login = loadable(() => import('./pages/login'));
+const Login = loadable(() => import('./pages/login copy'));
 const BlogPost = loadable(() => import('./pages/blog'));
 function App () {
     return (
       <div className="App">
         <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           {/* <Button /> */}
           {/* <ShowInput /> */}
           {/* <List />  */}
-           {/* <Count /> */}
-           {/* <ContainerUI />  */}
+          {/* <Count /> */}
+          {/* <ContainerUI />  */}
           {/* <div id='lifecycle'></div> */}
           {/* <TextArea /> */}
           {/* <Check/> */}
@@ -55,36 +55,44 @@ function App () {
           {/* <Temperature scale='c' />
           <SignUpDialog /> */}
         </header>
-        <main>
-          <nav>
-            <ul>
-              <li>
+        <main className='container'>
+          {/* <nav >
+            <div>
+              <div className="App-link">
                 <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/clock">Clock</Link>
-              </li>
-              <li>
+              </div>
+              <div className="App-link">
+                <Link to="/clock">短视频推广</Link>
+              </div>
+              <div className="App-link">
                 <Link to="/">Users</Link>
-              </li>
-              <li>
-                <NavLink to="/blog/727">Blog</NavLink>
-              </li>
-            </ul>
-          </nav>
+              </div>
+              <div className="App-link">
+                <NavLink to="/blog/727" activeClassName='nav-link'>Blog</NavLink>
+              </div>
+            </div>
+          </nav> */}
+          <Sider />
+          <section>
+          <div className="route-content">
+          <img src={logo} className="App-logo" alt="logo" />
           <Switch>
-            <Route path="/login" exact>
+            <Route path="/" exact>
               <Login />
             </Route>
             <Route path="/clock" exact>
                 <Clock />
             </Route>
             <Route path="/:name/:num" exact component={BlogPost} />
-            <Route path="/" exact>
+            <Route path="/user" exact>
                 <UserList />
             </Route>
             <Redirect to='/'></Redirect>
           </Switch>
+          </div>
+          <footer>jiedi</footer>
+          </section>
+          {/* <footer>jiedi</footer> */}
         </main>
       </div>
     );
