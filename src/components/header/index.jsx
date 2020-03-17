@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { Modal } from "antd";
+import LinkButton from '../link-button';
 import logo from "../../assets/qing.png";
 import { reqWeather } from "../../api";
 import memoryStore from "../../utils/menoryUtil";
@@ -64,7 +65,8 @@ class Header extends React.Component {
       <div className="header">
         <div className="header-top">
           <span>欢迎，{user.name}</span>
-          <a href="javascript:void(0);" onClick={this.logout.bind(this)}>退出</a>
+          <LinkButton onClick={this.logout.bind(this)}>退出</LinkButton>
+          {/* <a href="javascript:void(0);" onClick={this.logout.bind(this)}>退出</a> */}
         </div>
         <div className="header-bottom">
           <div className="header-bottom-left">{title}</div>
