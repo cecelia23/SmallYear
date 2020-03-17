@@ -1,5 +1,5 @@
 import React from 'react';
-import {actions} from '../redux/index';
+import {actions} from '../../redux/index';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 // import ReduxUI from '../redux/react-redux-connect';

@@ -469,7 +469,7 @@ module.exports = function(webpackEnv) {
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
                 'less-loader',
-                { javascriptEnabled: true, modifyVars: { "@primary-color": "#00965e", } }
+                { javascriptEnabled: true, modifyVars: { "@primary-color": "#9966cc", } }
               ),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -490,7 +490,7 @@ module.exports = function(webpackEnv) {
                   },
                 },
                 'less-loader',
-                { javascriptEnabled: true, modifyVars: { "@primary-color": "#00965e", } }
+                { javascriptEnabled: true, modifyVars: { "@primary-color": "#9966cc", } }
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
