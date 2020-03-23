@@ -15,7 +15,16 @@ export const reqCategorys = (parentId = 0) => ajax('/manage/category/list', {par
 export const reqAddCategoty = (categoryName, parentId) => ajax('/manage/category/add', {categoryName, parentId},'POST');
 // 更新分类
 export const reqUpdateCategoty = ({categoryName, categoryId}) => ajax('/manage/category/update',{categoryName, categoryId}, 'POST');
+// 查找分类
+export const reqCategoryInfo = (categoryId) => ajax('/manage/category/info', {categoryId});
+// 获取商品分类列表
+export const reqProduct = (pageNum, pageSize) => ajax('/manage/products/list', {pageNum, pageSize})
+// 搜索商品
+export const reqSearchProducts = (pageNum, pageSize, searchType, value) => ajax('/manage/products/search', {pageNum, pageSize, [searchType]:value});
+// 更新商品（上/下架）
+export const reqUpdateProductStatus = (productId, status) => ajax('/manage/products/updateStatus', {productId, status}, 'POST');
 
+// 获取天气信息
 export const reqWeather = (city) => {
     return new Promise((resovle, reject) => {
         const url = `https://www.tianqiapi.com/api?version=v6&appid=18552452&appsecret=azaS5gc7&city=${city}&vue=1`;
