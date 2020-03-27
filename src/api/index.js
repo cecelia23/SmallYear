@@ -23,7 +23,10 @@ export const reqProduct = (pageNum, pageSize) => ajax('/manage/products/list', {
 export const reqSearchProducts = (pageNum, pageSize, searchType, value) => ajax('/manage/products/search', {pageNum, pageSize, [searchType]:value});
 // 更新商品（上/下架）
 export const reqUpdateProductStatus = (productId, status) => ajax('/manage/products/updateStatus', {productId, status}, 'POST');
+// 上传图片?
 
+// 删除图片
+export const reqDeletePicture = (name) => ajax('/manage/imgs/delete', {name}, "POST");
 // 获取天气信息
 export const reqWeather = (city) => {
     return new Promise((resovle, reject) => {

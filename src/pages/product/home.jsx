@@ -52,7 +52,7 @@ class ProductHome extends React.Component {
             <span>
               {/* 这里要携带state对象，此方式只支持browserRouter */}
               <LinkButton onClick={() => this.props.history.push('/product/detail', {product})}>详情</LinkButton>
-              <LinkButton>修改</LinkButton>
+              <LinkButton onClick={() => this.props.history.push('/product/addupdate',{product})}>修改</LinkButton>
             </span>
           );
         }
@@ -125,7 +125,7 @@ class ProductHome extends React.Component {
       </span>
     );
     const extra = (
-      <Button type="primary">
+      <Button type="primary" onClick={()=> this.props.history.push('/product/addupdate')}>
         <Icon type="plus" />
         增加商品
       </Button>

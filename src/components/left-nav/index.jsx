@@ -54,7 +54,7 @@ class LeftNav extends React.Component {
         </Menu.Item>
         ))
       } else {
-        const cItem = item.children.find((cIterm) => cIterm.key === this.props.location.pathname);
+        const cItem = item.children.find((cIterm) =>  this.props.location.pathname.indexOf(cIterm.key) === 0);
         if (cItem) {
           this.openKey = item.key;
         }
@@ -80,8 +80,11 @@ class LeftNav extends React.Component {
   }
 
   render() {
-    const param = this.props.location.pathname;
+    let param = this.props.location.pathname;
     // debugger
+    if (param.indexOf('/product') === 0) {
+      param = '/product';
+    }
     return (
       <div className="left-nav">
         <Link to="/" className="left-nav-link">

@@ -40,7 +40,7 @@ class ProductDetail extends React.Component {
         <LinkButton onClick={() => this.props.history.goBack()}>
           <Icon
             type="arrow-left"
-            style={{ color: "#9966CC", fontSize: 20, marginRight: 15 }}
+            className="back-arrow"
           ></Icon>
         </LinkButton>
         <span>商品详情</span>
