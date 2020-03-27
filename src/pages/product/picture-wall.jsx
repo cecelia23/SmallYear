@@ -95,7 +95,7 @@ class PicturesWall extends React.Component {
     return (
       <div className="clearfix">
         <Upload
-          action={BASE_IMG_URL + "manage/img/upload"} // 上传图片的接口地址
+          action={"/manage/img/upload"} // 上传图片的接口地址
           accept="image/*" // 接收文件的类型
           name="image" // 请求参数名
           listType="picture-card"
