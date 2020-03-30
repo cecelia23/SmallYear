@@ -22,7 +22,7 @@ class Admin extends React.Component {
       return <Redirect to="/login" />;
     }
     return (
-      <Layout className="admin-container">
+      <Layout style={{minHeight: '100%'}}>
         <Sider style={{ backgroundColor: "#9966CC" }}>
           <LeftNav></LeftNav>
         </Sider>

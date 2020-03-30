@@ -1,27 +1,54 @@
 import React from "react";
-import { Card, Form, Input, Cascader, Button, Icon } from "antd";
+import { Card, Form, Input, Cascader, Button, Icon, message } from "antd";
 import LinkButton from "../../components/link-button";
-import { reqCategorys } from "../../api";
-import PicturesWall from './picture-wall';
+import { reqCategorys, reqAddProduct } from "../../api";
+import PicturesWall from "./picture-wall";
+import RichTextEditor from "./rich-text-editor";
 
 class ProductUpdate extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     // 创建一个用于保存ref的容器
     this.myRef = React.createRef();
+    this.editor = React.createRef();
   }
   state = {
     options: []
   };
   submit = () => {
     const form = this.props.form;
-    form.validateFields((err, values) => {
+    form.validateFields(async (err, values) => {
       if (err) {
         alert(err.message);
       } else {
+        const { name, sc, price, category } = values;
+        var categoryId, pcategoryId;
+        if (category.length === 2) {
+          categoryId = category[1];
+          pcategoryId = category[0];
+        } else {
+          pcategoryId = 0;
+          categoryId = category[0];
+        }
         const images = this.myRef.current.getImgs();
-        console.log("success", values);
-        console.log(images);
+        const detail = this.editor.current.getDetail();
+        const result = await reqAddProduct(
+          this.isUpdate,
+          this.product._id,
+          name,
+          sc,
+          price,
+          categoryId,
+          pcategoryId,
+          images,
+          detail
+        );
+        if (result.status === 0) {
+          message.success(`${this.isUpdate ? "修改" : "添加"} 商品成功！`);
+          this.props.history.goBack();
+        } else {
+          message.error(`${this.isUpdate ? "修改" : "添加"} 商品失败！`);
+        }
       }
     });
   };
@@ -111,15 +138,13 @@ class ProductUpdate extends React.Component {
   }
   render() {
     this.isUpdate = false;
-    this.product = {}
+    this.product = {};
     if (this.props.location.state) {
-      // console.log(this.props.location.state.product)
       const { product } = this.props.location.state;
       this.isUpdate = !!product;
       this.product = product || {};
-    } 
-
-    const { pcategoryId, categoryId, imgs } = this.product;
+    }
+    const { pcategoryId, categoryId, imgs, detail } = this.product;
 
     // 如果是修改，放入级联分类ID
     let categoryIds = [];
@@ -150,7 +175,7 @@ class ProductUpdate extends React.Component {
     };
     const { getFieldDecorator } = this.props.form;
     return (
-      <Card title={title}>
+      <Card title={title} className="card">
         <Form {...formItemLayout}>
           <Item label="商品名称">
             {getFieldDecorator("name", {
@@ -218,13 +243,17 @@ class ProductUpdate extends React.Component {
             )}
           </Item>
           <Item label="商品图片">
-          {/* 将容器对象传递给子组件，子组件将自身装进容器 */}
-            <PicturesWall ref={this.myRef} imgs={imgs}/>
+            {/* 将容器对象传递给子组件，子组件将自身装进容器 */}
+            <PicturesWall ref={this.myRef} imgs={imgs} />
           </Item>
-          <Item label="商品详情">
-            <Input type="number" placeholder="请输入商品价格" addonAfter="元" />
+          <Item
+            label="商品详情"
+            labelCol={{ span: 2 }}
+            wrapperCol={{ span: 20 }}
+          >
+            <RichTextEditor ref={this.editor} editor={detail} />
           </Item>
-          <Item label="商品价格">
+          <Item>
             <Button type="primary" onClick={this.submit.bind(this)}>
               提交
             </Button>

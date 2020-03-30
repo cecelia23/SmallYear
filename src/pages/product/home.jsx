@@ -131,7 +131,7 @@ class ProductHome extends React.Component {
       </Button>
     );
     return (
-      <Card title={title} extra={extra}>
+      <Card title={title} extra={extra} className="card">
         <Table
           bordered
           rowKey="_id"

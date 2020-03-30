@@ -59,7 +59,7 @@ class PicturesWall extends React.Component {
   };
 
   handleChange = async ({ file, fileList }) => {
-    console.log(file);
+    // console.log(file);
     // 一旦上传成功，可将当前上传的file信息修正（name, url）
     if (file.status === "done") {
       const result = file.respone;

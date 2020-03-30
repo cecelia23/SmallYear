@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { Modal } from "antd";
-import LinkButton from '../link-button';
+import LinkButton from "../link-button";
 import logo from "../../assets/qing.png";
 import { reqWeather } from "../../api";
 import memoryStore from "../../utils/menoryUtil";
@@ -33,7 +33,9 @@ class Header extends React.Component {
       if (item.key === pathname) {
         title = item.title;
       } else if (item.children) {
-        const cItem = item.children.find(cItem => cItem.key === pathname);
+        const cItem = item.children.find(
+          cItem => pathname.indexOf(cItem.key) === 0
+        );
         if (cItem) {
           title = cItem.title;
         }

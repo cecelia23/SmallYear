@@ -47,7 +47,7 @@ class ProductDetail extends React.Component {
       </span>
     );
     return (
-      <Card title={title}>
+      <Card title={title} className="card">
         <List className="product-detail">
           <Item>
             <span className="left">商品名称</span>

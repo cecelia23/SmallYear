@@ -8,7 +8,7 @@ import ProductDetail from './detail';
 class Product extends React.Component {
   render() {
     return (
-      <Switch>
+      <Switch >
         <Route path="/product"  exact component={ProductHome} />
         <Route path="/product/addupdate" component={ProductUpdate} />
         <Route path="/product/detail" component={ProductDetail} />
