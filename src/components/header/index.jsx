@@ -50,7 +50,6 @@ class Header extends React.Component {
         storage.removeUser();
         memoryStore.user = {};
         clearInterval(this.intervalId);
-        console.log("OK");
         this.props.history.replace("/login");
       }
     });

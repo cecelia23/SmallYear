@@ -169,7 +169,7 @@ class Category extends React.Component {
   bindForm(form) {
     this.form = form;
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.initColumns();
   }
   componentDidMount() {
@@ -224,8 +224,8 @@ class Category extends React.Component {
         <Modal
           title="添加分类"
           visible={this.state.modalState === 1}
-          onOK={this.addCategory}
-          onCancel={this.addCategory}
+          onOk={this.addCategory}
+          onCancel={this.handleCancal}
         >
           <AddForm
             categorys={dataSource}
@@ -237,8 +237,8 @@ class Category extends React.Component {
         <Modal
           title="更新分类"
           visible={this.state.modalState === 2}
-          onOK={this.updateCategory}
-          onCancel={this.updateCategory}
+          onOk={this.updateCategory}
+          onCancel={this.handleCancal}
         >
           <UpdateForm categoryName={name} setForm={this.bindForm.bind(this)} />
         </Modal>

@@ -29,6 +29,13 @@ export const reqUpdateProductStatus = (productId, status) => ajax('/manage/produ
 export const reqDeletePicture = (name) => ajax('/manage/imgs/delete', {name}, "POST");
 // 添加/更新商品
 export const reqAddProduct = (isUpdate, _id, name, sc, price, categoryId, pcategoryId, imgs, detail) => ajax('/manage/product/addUpdate', {isUpdate, _id, name, sc, price, categoryId,pcategoryId, imgs, detail}, 'POST');
+// 获取角色
+export const reqRoles = () => ajax('/manage/roles/list');
+// 添加角色
+export const reqRoleAdd = (name) => ajax('/manage/role/add', {name}, 'POST');
+// 更新角色权限
+export const reqRoleUpdate = (role) => ajax('/manage/role/update', role, 'POST');
+
 // 获取天气信息
 export const reqWeather = (city) => {
     return new Promise((resovle, reject) => {

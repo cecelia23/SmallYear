@@ -75,7 +75,7 @@ class LeftNav extends React.Component {
       return pre
     }, [])
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.menuNodes = this.getMenuNodes(menu);
   }
 
