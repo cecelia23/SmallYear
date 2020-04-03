@@ -2,7 +2,8 @@ const menu = [
     {
         title: '主页',
         key: '/home',
-        icon: 'home'
+        icon: 'home',
+        isPublic: true, // 所有人都可见
     },
     {
         title: '商品',

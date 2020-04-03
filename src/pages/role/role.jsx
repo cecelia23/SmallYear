@@ -1,10 +1,13 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { Card, Button, Table, message, Modal } from "antd";
 import AddForm from "./add_form";
 import AuthForm from "./auth_form";
+import Test from "../../components/test";
 import { PAGE_SIZE } from "../../config/default";
 import memoryUtil from "../../utils/menoryUtil";
-import {formatDate, toSQLDate} from '../../utils/dateUtils';
+import storage from "../../utils/storageUtil";
+import { formatDate, toSQLDate } from "../../utils/dateUtils";
 import { reqRoles, reqRoleAdd, reqRoleUpdate } from "../../api";
 
 class Role extends React.Component {
@@ -86,6 +89,7 @@ class Role extends React.Component {
       }
     });
   };
+  // 更改角色权限
   addRoleAuth = async () => {
     // 隐藏蒙层
     this.setState({
@@ -95,15 +99,25 @@ class Role extends React.Component {
     const menus = this.authRef.current.getMenus();
     const { role } = this.state;
     role.menu = menus;
-    role.auth_name = memoryUtil.user.name;
+    role.auth_name = memoryUtil.user.username;
     let time = Date.now();
     let auth_time = Number(toSQLDate(time));
     role.auth_time = auth_time;
     // 请求
     const result = await reqRoleUpdate(role);
     if (result.status === 0) {
-      message.success("更新角色权限成功");
-      this.getRoles();
+      // 当前用户所属的角色权限被修改,需退出重新登录
+      if (role._id === memoryUtil.user.role_id) {
+        memoryUtil.user = {};
+        storage.removeUser();
+        console.log(this);
+        debugger;
+        this.props.history.replace("/login");
+        message.info("当前用户角色权限修改，需重新登录");
+      } else {
+        message.success("更新角色权限成功");
+        this.getRoles();
+      }
       // this.setState({
       //   roles: [...this.state.roles]
       // });
@@ -147,7 +161,13 @@ class Role extends React.Component {
           pagination={{
             defaultPageSize: PAGE_SIZE
           }}
-          rowSelection={{ type: "radio", selectedRowKeys: [role._id] }}
+          rowSelection={{
+            type: "radio",
+            selectedRowKeys: [role._id],
+            onSelect: role => {
+              this.setState({ role });
+            }
+          }}
           onRow={this.onRowHandle}
         ></Table>
         <Modal
@@ -159,6 +179,7 @@ class Role extends React.Component {
             this.form.resetFields();
           }}
         >
+          <Test />
           <AddForm setForm={form => (this.form = form)}></AddForm>
         </Modal>
         <Modal
@@ -176,4 +197,4 @@ class Role extends React.Component {
   }
 }
 
-export default Role;
+export default withRouter(Role);

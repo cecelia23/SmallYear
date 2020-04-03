@@ -139,6 +139,7 @@ class ProductHome extends React.Component {
           dataSource={products}
           columns={this.columns}
           pagination={{
+            current: this.pageNum,
             defaultPageSize: PAGE_SIZE,
             total,
             showQuickJumper: true,

@@ -8,7 +8,6 @@ import { message } from 'antd';
 
 export const reqLogin = (username, password) =>  ajax('/login', {username, password}, 'POST');
 
-export const reqAddUser = (user = {}) => ajax('/manage/user/add', user, 'POST');
 // 获取一级/二级分类列表
 export const reqCategorys = (parentId = 0) => ajax('/manage/category/list', {parentId});
 // 添加分类
@@ -29,12 +28,20 @@ export const reqUpdateProductStatus = (productId, status) => ajax('/manage/produ
 export const reqDeletePicture = (name) => ajax('/manage/imgs/delete', {name}, "POST");
 // 添加/更新商品
 export const reqAddProduct = (isUpdate, _id, name, sc, price, categoryId, pcategoryId, imgs, detail) => ajax('/manage/product/addUpdate', {isUpdate, _id, name, sc, price, categoryId,pcategoryId, imgs, detail}, 'POST');
+
 // 获取角色
 export const reqRoles = () => ajax('/manage/roles/list');
 // 添加角色
 export const reqRoleAdd = (name) => ajax('/manage/role/add', {name}, 'POST');
 // 更新角色权限
 export const reqRoleUpdate = (role) => ajax('/manage/role/update', role, 'POST');
+
+// 获取用户列表
+export const reqUsers = () => ajax('/manage/users/list');
+// 删除用户
+export const reqDeleteUser = (userId) => ajax('/manage/users/delete', {userId}, 'POST');
+// 添加/更新用户
+export const reqAddUpdateUser = (isUpdate, user = {}) => ajax('/manage/users/addupdate', {isUpdate, user}, 'POST');
 
 // 获取天气信息
 export const reqWeather = (city) => {

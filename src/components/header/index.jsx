@@ -65,7 +65,7 @@ class Header extends React.Component {
     return (
       <div className="header">
         <div className="header-top">
-          <span>欢迎，{user.name}</span>
+          <span>欢迎，{user.username}</span>
           <LinkButton onClick={this.logout.bind(this)}>退出</LinkButton>
           {/* <a href="javascript:void(0);" onClick={this.logout.bind(this)}>退出</a> */}
         </div>

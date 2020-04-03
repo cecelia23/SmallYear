@@ -41,10 +41,9 @@ class Login extends React.Component {
         if (res.status === 0) {
           message.success('登录成功');
           // 分别保存到内存、localstorage中
-          memoryUtil.user = res.data.user;
-          storage.setUser(res.data.user);
+          memoryUtil.user = res.user;
+          storage.setUser(res.user);
           // 页面跳转
-          // console.log(this.props);
           // 在回调函数中跳转用history对象
           this.props.history.replace('/');
         } else {

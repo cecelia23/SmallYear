@@ -18,7 +18,7 @@ const { Header, Footer, Sider, Content } = Layout;
 class Admin extends React.Component {
   render() {
     const user = memoryUtil.user;
-    if (!user || !user.id) {
+    if (!user || !user._id) {
       return <Redirect to="/login" />;
     }
     return (

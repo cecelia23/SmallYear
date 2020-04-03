@@ -5,9 +5,9 @@ import menuList from "../../config/menuConfig";
 
 const { TreeNode } = Tree;
 
-class AuthForm extends React.Component {
+class AuthForm extends React.PureComponent {
   static propTypes = {
-    role: PropTypes.object.isRequired
+    role: PropTypes.object
   };
   constructor(props) {
     super(props);
@@ -34,7 +34,7 @@ class AuthForm extends React.Component {
       return this.state.checkedKeys;
   }
   onCheck = checkedKeys => {
-    console.log('onCheck', checkedKeys);
+    // console.log('onCheck', checkedKeys);
     this.setState({ checkedKeys });
   };
 
@@ -42,6 +42,7 @@ class AuthForm extends React.Component {
   UNSAFE_componentWillMount() {
     this.treeNode = this.getTreeNode(menuList);
   }
+  // 初始显示时，不会调用
   UNSAFE_componentWillReceiveProps(nextProps) {
     var {menu} = nextProps.role;
     if (typeof menu === 'string') {
