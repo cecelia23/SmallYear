@@ -1,5 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { setHeadTitle } from "../../redux/action";
 import { Menu, Icon } from "antd";
 import menu from "../../config/menuConfig";
 import memoryUtil from "../../utils/menoryUtil";
@@ -38,11 +40,17 @@ class LeftNav extends React.Component {
   };
   // array.map() + 递归
   getMenuNode = menu => {
+    let path = this.props.location.pathname;
+
     return menu.map(item => {
       if (this.hasAuth(item)) {
         if (!item.children) {
+          // 点击的是menu.item,所以比较的是item.key
+          if (item.key === path || path.indexOf(item.key) === 0) {
+            this.props.headTitle(item.title);
+          }
           return (
-            <Menu.Item key={item.key}>
+            <Menu.Item key={item.key} onClick={() => {this.props.headTitle(item.title)}}>
               <Link to={item.key}>
                 <Icon type={item.icon} />
                 {item.title}
@@ -132,5 +140,9 @@ class LeftNav extends React.Component {
     );
   }
 }
-
-export default withRouter(LeftNav);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    prop: state.prop
+  };
+};
+export default connect(mapStateToProps, { setHeadTitle })(withRouter(LeftNav));

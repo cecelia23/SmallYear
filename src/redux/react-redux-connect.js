@@ -1,5 +1,5 @@
 import React from 'react';
-import {actions} from './index';
+import {changeName} from './action';
 import {connect} from 'react-redux';
 
 class ReduxUI extends React.Component {
@@ -10,7 +10,6 @@ class ReduxUI extends React.Component {
         return (
             <div>
                 <p>{ this.props.name }</p>
-                <p>{ this.props.num }</p>
                 <input onChange={e => this.props.changeName(e.target.value) } />
                 <button onClick={this.handleClick.bind(this) }>access</button>
             </div>
@@ -20,11 +19,8 @@ class ReduxUI extends React.Component {
 
 const mapStateToProps = (state, Props) => {
     return {
-        num: state.num,
         name: state.name
     }
 }
-// const mapDispatchToProps = () => {
-//     return actions;
-// }
-export default connect(mapStateToProps, actions)(ReduxUI);
+
+export default connect(mapStateToProps, {changeName})(ReduxUI);

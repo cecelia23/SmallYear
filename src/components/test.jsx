@@ -41,7 +41,6 @@ class Test extends React.Component {
       return (
         <div>
           <p>{count}</p>
-          {/* <button onClick={() => this.handleClick}>更新</button> */}
         </div>
       );
     }

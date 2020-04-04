@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import {connect} from 'react-redux';
 import { Modal } from "antd";
 import LinkButton from "../link-button";
 import logo from "../../assets/qing.png";
@@ -26,23 +27,24 @@ class Header extends React.Component {
       this.setState({ time });
     }, 1000);
   };
-  getTitle = () => {
-    const pathname = this.props.location.pathname;
-    let title;
-    menuList.forEach(item => {
-      if (item.key === pathname) {
-        title = item.title;
-      } else if (item.children) {
-        const cItem = item.children.find(
-          cItem => pathname.indexOf(cItem.key) === 0
-        );
-        if (cItem) {
-          title = cItem.title;
-        }
-      }
-    });
-    return title;
-  };
+  // 从redux中取headTitle， 不再需要一个个比较
+  // getTitle = () => {
+  //   const pathname = this.props.location.pathname;
+  //   let title;
+  //   menuList.forEach(item => {
+  //     if (item.key === pathname) {
+  //       title = item.title;
+  //     } else if (item.children) {
+  //       const cItem = item.children.find(
+  //         cItem => pathname.indexOf(cItem.key) === 0
+  //       );
+  //       if (cItem) {
+  //         title = cItem.title;
+  //       }
+  //     }
+  //   });
+  //   return title;
+  // };
   logout = () => {
     Modal.confirm({
       title: "你确定要退出吗?",
@@ -60,7 +62,8 @@ class Header extends React.Component {
   }
   render() {
     const { user } = memoryStore;
-    const title = this.getTitle();
+    // const title = this.getTitle();
+    const {title} = this.props.headTitle;
     const time = formatDate(this.state.time);
     return (
       <div className="header">
@@ -81,5 +84,10 @@ class Header extends React.Component {
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    headTitle: state.headTitle
+  }
+}
 
-export default withRouter(Header);
+export default connect(mapStateToProps, {})(withRouter(Header));

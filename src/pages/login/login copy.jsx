@@ -1,5 +1,5 @@
 import React from "react";
-import { actions } from "../../redux/index";
+
 import { connect } from "react-redux";
 import { withRouter, Redirect } from 'react-router-dom';
 
@@ -45,7 +45,7 @@ class Login extends React.Component {
           storage.setUser(res.user);
           // 页面跳转
           // 在回调函数中跳转用history对象
-          this.props.history.replace('/');
+          this.props.history.replace('/home');
         } else {
           message.error(res.data.msg);
         }
@@ -81,7 +81,7 @@ class Login extends React.Component {
   render() {
     const user = memoryUtil.user;
     if (user && user.id) {
-      return <Redirect to='/' />
+      return <Redirect to='/home' />
     }
     const { getFieldDecorator } = this.props.form;
     return (
@@ -173,4 +173,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const WrappedLogin = Form.create({ name: "login" })(withRouter(Login));
-export default connect(mapStateToProps, actions)(WrappedLogin);
+
+// connect()高阶函数，
+// connect()得到的函数是一个高阶组件，接受一个UI组件，返回一个容器组件
+// 作用：向UI组件传入特定的属性
+export default connect(mapStateToProps, {})(WrappedLogin);

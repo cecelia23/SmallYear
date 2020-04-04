@@ -1,5 +1,5 @@
 const Redux = require('redux');
-const thunk = require('redux-thunk').default; 
+const thunk = require('redux-thunk').default; // 用来实现redux异步的中间件
 
 const asyncAction = function(name) {
     let action = {

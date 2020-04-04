@@ -1,9 +1,11 @@
 import React from "react";
+
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
+
 import loadable from "@loadable/component";
 // import ShowInput from './components/showInput.js';
 // import Button from './components/Button.js';
@@ -25,8 +27,6 @@ import loadable from "@loadable/component";
 // import ContainerUI from './components/flux_reduce_store';
 // import ContainerUI from './reflux/react_reflux';
 // import Sider from './components/menu';
-// import {actions} from './redux/index';
-// import { connect } from 'react-redux';
 import Clock from "./pages/Clock";
 // import UserList from "./pages/user/users";
 import "./App.less";
@@ -107,5 +107,4 @@ function App() {
   );
 }
 
-// export default connect(state => state, actions)(App);
 export default App;

@@ -1,5 +1,4 @@
 import React from 'react';
-import {actions} from '../../redux/index';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 // import ReduxUI from '../redux/react-redux-connect';
@@ -99,4 +98,4 @@ const mapStateToProps = (state, ownProps) => {
     name: state.name
   }
 }
-export default connect(mapStateToProps, actions)(Login);
+export default connect(mapStateToProps, {})(Login);

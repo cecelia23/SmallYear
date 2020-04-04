@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { store } from "./redux/index";
-// import {BrowserRouter as Router} from 'react-router-dom';
+import store from "./redux/index";
 // import Route from './router';
-// import Login from './pages/login';
+
 import "./index.css";
 import App from "./App";
 
@@ -14,7 +13,6 @@ import memoryUtil from "./utils/menoryUtil";
 import * as serviceWorker from "./serviceWorker";
 
 memoryUtil.user = storage.getUser();
-// ReactDOM.render(<Provider store={store}><Login/></Provider>, document.getElementById('root'));
 ReactDOM.render(
   <Provider store={store}>
     <App />
