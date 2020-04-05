@@ -3,6 +3,7 @@
 */
 import storageUtil from "../utils/storageUtil";
 import { combineReducers } from "redux";
+// import { combineReducers } from "../libs/redux";
 import {
   SET_HEAD_TITLE,
   SHOW_ERROR_MSG,
@@ -27,16 +28,6 @@ const reducer = function (state, action) {
       return Object.assign({}, state, { count: state.count + action.data });
     case "decrement":
       return Object.assign({}, state, { count: state.count - action.data });
-    case "login":
-      let username = action.payload.username;
-      let password = action.payload.password;
-      let isLogin;
-      if (username === "123" && password === "123") {
-        isLogin = true;
-      } else {
-        isLogin = false;
-      }
-      return Object.assign({}, state, { isLogin });
     default:
       return state;
   }
@@ -74,7 +65,7 @@ const user = (state, action) => {
       return state;
   }
 };
-
+// 返回一个整合后的reducer
 export default combineReducers({
   reducer,
   headTitle,

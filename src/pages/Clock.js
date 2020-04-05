@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "antd";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
+import { connect } from "../libs/react-redux";
 import { increment, decrement, asyncIncrement } from "../redux/action";
 
 class Clock extends React.Component {
@@ -9,24 +10,23 @@ class Clock extends React.Component {
     count: PropTypes.number.isRequired,
     increment: PropTypes.func.isRequired,
     decrement: PropTypes.func.isRequired,
-    asyncIncrement: PropTypes.func.isRequired
+    asyncIncrement: PropTypes.func.isRequired,
   };
   constructor(props) {
     super(props);
     // this.state={} can only in constructor
     this.state = {
-      date: new Date()
+      date: new Date(),
     };
     this.numRef = React.createRef();
   }
   tick() {
     this.setState({
-      date: new Date()
+      date: new Date(),
     });
   }
   increment() {
     const number = this.numRef.current.value * 1;
-    console.log("increment", number);
     this.props.increment(number);
   }
   decrement() {
@@ -44,7 +44,7 @@ class Clock extends React.Component {
     clearInterval(this.timeId);
   }
   render() {
-    const {count} = this.props.count;
+    const count = this.props.count;
     return (
       <div>
         <h1>hello world</h1>
@@ -66,11 +66,11 @@ class Clock extends React.Component {
   }
 }
 const mapStateToProps = (state, ownProps) => ({
-  count: state.reducer
+  count: state.reducer.count,
 });
 // 要向哪个组件传递属性，就给哪个组件包裹容器组件
 export default connect(mapStateToProps, {
   increment,
   decrement,
-  asyncIncrement
+  asyncIncrement,
 })(Clock);

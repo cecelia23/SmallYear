@@ -2,7 +2,7 @@ import { SET_HEAD_TITLE, RECEIVE_USER, SHOW_ERROR_MSG, RESET_USER } from "./acti
 import { reqLogin } from "../api";
 import { message } from "antd";
 import storageUtil from "../utils/storageUtil";
-
+// 定义的函数是actionCreator, 通过调用actionCreator生成对应的action对象
 export const receiveUser = user => {
   return {
     type: RECEIVE_USER,
@@ -77,7 +77,7 @@ export const login = (username, password) => {
     // 发送ajax异步请求
     const result = await reqLogin(username, password);
     if (result.status === 0) {
-      // message.success("登录成功");
+      message.success("登录成功");
       // 保存到localStorage
       storageUtil.setUser(result.user);
       // 请求成功，调用对应的同步action
