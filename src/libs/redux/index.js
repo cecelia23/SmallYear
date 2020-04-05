@@ -1,6 +1,6 @@
 /*根据指定的reducer函数生成并返回一个store对象 */
 export const createStore = (reducer) => {
-  // 内部存储的state对象，初始值由reducer的初始执行决定
+  // 通过局部变量，实现内部存储的state对象，初始值由reducer的初始执行决定
   let state = reducer(undefined, { type: "@@redux/init" });
 
   let listeners = [];

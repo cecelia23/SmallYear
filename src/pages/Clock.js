@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "antd";
-// import { connect } from "react-redux";
-import { connect } from "../libs/react-redux";
+import { connect } from "react-redux";
+// import { connect } from "../libs/react-redux";
 import { increment, decrement, asyncIncrement } from "../redux/action";
 
 class Clock extends React.Component {

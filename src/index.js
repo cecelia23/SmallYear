@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import { Provider } from "react-redux";
-import { Provider } from "./libs/react-redux";
+import { Provider } from "react-redux";
+// import { Provider } from "./libs/react-redux";
 import store from "./redux/index";
 // import Route from './router';
 
