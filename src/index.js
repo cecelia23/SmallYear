@@ -7,12 +7,10 @@ import store from "./redux/index";
 import "./index.css";
 import App from "./App";
 
-import storage from "./utils/storageUtil";
-import memoryUtil from "./utils/menoryUtil";
+// import storage from "./utils/storageUtil";
 
 import * as serviceWorker from "./serviceWorker";
 
-memoryUtil.user = storage.getUser();
 ReactDOM.render(
   <Provider store={store}>
     <App />

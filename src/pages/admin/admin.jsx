@@ -10,14 +10,14 @@ import Role from "../role/role";
 import Bar from "../bar/bar";
 import Line from "../line/line";
 import Pie from "../pie/pie";
-import memoryUtil from "../../utils/menoryUtil";
+import {connect} from 'react-redux';
 import { Layout } from "antd";
 
 const { Header, Footer, Sider, Content } = Layout;
 
 class Admin extends React.Component {
   render() {
-    const user = memoryUtil.user;
+    const user = this.props.user;
     if (!user || !user._id) {
       return <Redirect to="/login" />;
     }
@@ -66,4 +66,9 @@ class Admin extends React.Component {
   }
 }
 
-export default Admin;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user
+  }
+}
+export default connect(mapStateToProps, {})(Admin);

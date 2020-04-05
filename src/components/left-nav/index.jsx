@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { setHeadTitle } from "../../redux/action";
 import { Menu, Icon } from "antd";
 import menu from "../../config/menuConfig";
-import memoryUtil from "../../utils/menoryUtil";
 import logo from "../../assets/logo192.png";
 import "./index.less";
 
@@ -18,7 +17,7 @@ class LeftNav extends React.Component {
   // 当前用户的role.menu中含有该item.key
   hasAuth = item => {
     const { key, isPublic } = item;
-    const user = memoryUtil.user;
+    const user = this.props.user;
     // 1. 用户名为admin
     // 2. 该导航页面为共有组件isPublic
     // 3. item.key 包含在 role.menu中
@@ -47,10 +46,10 @@ class LeftNav extends React.Component {
         if (!item.children) {
           // 点击的是menu.item,所以比较的是item.key
           if (item.key === path || path.indexOf(item.key) === 0) {
-            this.props.headTitle(item.title);
+            this.props.setHeadTitle(item.title);
           }
           return (
-            <Menu.Item key={item.key} onClick={() => {this.props.headTitle(item.title)}}>
+            <Menu.Item key={item.key} onClick={() => {this.props.setHeadTitle(item.title)}}>
               <Link to={item.key}>
                 <Icon type={item.icon} />
                 {item.title}
@@ -142,7 +141,7 @@ class LeftNav extends React.Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    prop: state.prop
+    user: state.user
   };
 };
 export default connect(mapStateToProps, { setHeadTitle })(withRouter(LeftNav));

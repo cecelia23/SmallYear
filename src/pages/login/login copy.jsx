@@ -1,30 +1,30 @@
 import React from "react";
 
 import { connect } from "react-redux";
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter, Redirect } from "react-router-dom";
 
 // import {useHistory} from 'react-router-dom';
 // import ReduxUI from '../redux/react-redux-connect';
 import { Form, Input, Icon, Button, message } from "antd";
 import "./login.less";
 import logo from "../../assets/logo192.png";
-import { reqLogin } from "../../api/";
-import memoryUtil from '../../utils/menoryUtil';
-import storage from '../../utils/storageUtil';
+// import { reqLogin } from "../../api/";
+// import storage from '../../utils/storageUtil';
+import { login } from "../../redux/action";
 
 const layout = {
   labelCol: {
-    span: 6
+    span: 6,
   },
   wrapperCol: {
-    span: 16
-  }
+    span: 16,
+  },
 };
 const tailLayout = {
   wrapperCol: {
     offset: 4,
-    span: 18
-  }
+    span: 18,
+  },
 };
 
 class Login extends React.Component {
@@ -36,26 +36,27 @@ class Login extends React.Component {
       if (!err) {
         // 发送异步请求
         const { username, password } = value;
-        const res = await reqLogin(username, password);
+        // const res = await reqLogin(username, password);
         // 根据后台返回的状态
-        if (res.status === 0) {
-          message.success('登录成功');
-          // 分别保存到内存、localstorage中
-          memoryUtil.user = res.user;
-          storage.setUser(res.user);
-          // 页面跳转
-          // 在回调函数中跳转用history对象
-          this.props.history.replace('/home');
-        } else {
-          message.error(res.data.msg);
-        }
+        // if (res.status === 0) {
+        //   message.success('登录成功');
+        //   // 分别保存到localstorage中
+        //   storage.setUser(res.user);
+        // 页面跳转
+        // 在回调函数中跳转用history对象
+        this.props.login(username, password);
+
+        // this.props.history.replace('/home');
+        // } else {
+        //   message.error(res.msg);
+        // }
         // reqLogin(username, password).then(res =>{
         //   console.log('success', res);
         // }).catch(err => {
         //   console.log('失败了', err)
         // })
       } else {
-        message.error('用户名或密码格式不正确');
+        message.error("用户名或密码格式不正确");
       }
     });
   }
@@ -79,10 +80,12 @@ class Login extends React.Component {
   };
 
   render() {
-    const user = memoryUtil.user;
-    if (user && user.id) {
-      return <Redirect to='/home' />
+    const user = this.props.user;
+    if (user && user._id) {
+      return <Redirect to="/home" />;
     }
+    const errorMsg = this.props.user.errorMsg;
+
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="login">
@@ -92,6 +95,7 @@ class Login extends React.Component {
         </header>
         <section className="login-container">
           <div className="form-container">
+            <div>{errorMsg}</div>
             <h2>用户登录</h2>
             <Form
               {...layout}
@@ -103,21 +107,21 @@ class Login extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: "用户名必须输入"
+                      message: "用户名必须输入",
                     },
                     {
                       min: 4,
-                      message: "用户名最少4位"
+                      message: "用户名最少4位",
                     },
                     {
                       max: 12,
-                      message: "用户名最多12位"
+                      message: "用户名最多12位",
                     },
                     {
                       pattern: /^[a-zA-Z0-9_]+$/,
-                      message: "用户名必须为字母、数字、下划线"
-                    }
-                  ]
+                      message: "用户名必须为字母、数字、下划线",
+                    },
+                  ],
                 })(
                   <Input
                     prefix={
@@ -131,12 +135,12 @@ class Login extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: "请输入密码"
+                      message: "请输入密码",
                     },
                     {
-                      validator: this.validatePsw
-                    }
-                  ]
+                      validator: this.validatePsw,
+                    },
+                  ],
                 })(
                   <Input.Password
                     prefix={
@@ -168,7 +172,7 @@ class Login extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    isLogin: state.isLogin
+    user: state.user,
   };
 };
 
@@ -177,4 +181,4 @@ const WrappedLogin = Form.create({ name: "login" })(withRouter(Login));
 // connect()高阶函数，
 // connect()得到的函数是一个高阶组件，接受一个UI组件，返回一个容器组件
 // 作用：向UI组件传入特定的属性
-export default connect(mapStateToProps, {})(WrappedLogin);
+export default connect(mapStateToProps, { login })(WrappedLogin);

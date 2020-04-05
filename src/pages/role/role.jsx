@@ -1,12 +1,13 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { Card, Button, Table, message, Modal } from "antd";
 import AddForm from "./add_form";
 import AuthForm from "./auth_form";
 import Test from "../../components/test";
 import { PAGE_SIZE } from "../../config/default";
-import memoryUtil from "../../utils/menoryUtil";
-import storage from "../../utils/storageUtil";
+// import storage from "../../utils/storageUtil";
+import { logout } from "../../redux/action";
 import { formatDate, toSQLDate } from "../../utils/dateUtils";
 import { reqRoles, reqRoleAdd, reqRoleUpdate } from "../../api";
 
@@ -17,7 +18,7 @@ class Role extends React.Component {
       roles: [],
       role: {}, // 用于保存选中的对象
       isShowAdd: false,
-      isShowAuth: false
+      isShowAuth: false,
     };
     this.authRef = React.createRef();
   }
@@ -26,22 +27,22 @@ class Role extends React.Component {
       {
         title: "角色名称",
         dataIndex: "name",
-        key: "name"
+        key: "name",
       },
       {
         title: "创建时间",
         dataIndex: "create_time",
-        render: formatDate
+        render: formatDate,
       },
       {
         title: "授权时间",
         dataIndex: "auth_time",
-        render: formatDate
+        render: formatDate,
       },
       {
         title: "授权人",
-        dataIndex: "auth_name"
-      }
+        dataIndex: "auth_name",
+      },
     ];
   }
   // 异步获取角色
@@ -50,7 +51,7 @@ class Role extends React.Component {
     if (result.status === 0) {
       const roles = result.list;
       this.setState({
-        roles
+        roles,
       });
     } else {
       message.error("无法获取角色列表");
@@ -59,11 +60,11 @@ class Role extends React.Component {
   // 点击某行
   onRowHandle = (row, rowIndex) => {
     return {
-      onClick: event => {
+      onClick: (event) => {
         this.setState({
-          role: row
+          role: row,
         });
-      }
+      },
     };
   };
   // 添加角色
@@ -76,7 +77,7 @@ class Role extends React.Component {
         // 清空form中的内容
         this.form.resetFields();
         this.setState({
-          isShowAdd: false
+          isShowAdd: false,
         });
         // 请求
         const result = await reqRoleAdd(roleName);
@@ -93,13 +94,13 @@ class Role extends React.Component {
   addRoleAuth = async () => {
     // 隐藏蒙层
     this.setState({
-      isShowAuth: false
+      isShowAuth: false,
     });
     // 收集数据
     const menus = this.authRef.current.getMenus();
     const { role } = this.state;
     role.menu = menus;
-    role.auth_name = memoryUtil.user.username;
+    role.auth_name = this.props.user.username;
     let time = Date.now();
     let auth_time = Number(toSQLDate(time));
     role.auth_time = auth_time;
@@ -107,12 +108,10 @@ class Role extends React.Component {
     const result = await reqRoleUpdate(role);
     if (result.status === 0) {
       // 当前用户所属的角色权限被修改,需退出重新登录
-      if (role._id === memoryUtil.user.role_id) {
-        memoryUtil.user = {};
-        storage.removeUser();
-        console.log(this);
-        debugger;
-        this.props.history.replace("/login");
+      if (role._id === this.props.user.role_id) {
+        this.props.logout();
+        // storage.removeUser();
+        // this.props.history.replace("/login");
         message.info("当前用户角色权限修改，需重新登录");
       } else {
         message.success("更新角色权限成功");
@@ -159,14 +158,14 @@ class Role extends React.Component {
           dataSource={roles}
           columns={this.columns}
           pagination={{
-            defaultPageSize: PAGE_SIZE
+            defaultPageSize: PAGE_SIZE,
           }}
           rowSelection={{
             type: "radio",
             selectedRowKeys: [role._id],
-            onSelect: role => {
+            onSelect: (role) => {
               this.setState({ role });
-            }
+            },
           }}
           onRow={this.onRowHandle}
         ></Table>
@@ -180,7 +179,7 @@ class Role extends React.Component {
           }}
         >
           <Test />
-          <AddForm setForm={form => (this.form = form)}></AddForm>
+          <AddForm setForm={(form) => (this.form = form)}></AddForm>
         </Modal>
         <Modal
           title="添加角色权限"
@@ -196,5 +195,10 @@ class Role extends React.Component {
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user,
+  };
+};
 
-export default withRouter(Role);
+export default connect(mapStateToProps, { logout })(withRouter(Role));

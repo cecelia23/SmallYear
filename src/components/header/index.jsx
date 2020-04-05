@@ -1,21 +1,22 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import { Modal } from "antd";
 import LinkButton from "../link-button";
 import logo from "../../assets/qing.png";
 import { reqWeather } from "../../api";
-import memoryStore from "../../utils/menoryUtil";
-import storage from "../../utils/storageUtil";
+// import memoryStore from "../../utils/menoryUtil";
+// import storage from "../../utils/storageUtil";
 import { formatDate } from "../../utils/dateUtils";
-import menuList from "../../config/menuConfig";
+import { logout } from "../../redux/action";
+// import menuList from "../../config/menuConfig";
 import "./index.less";
 
 class Header extends React.Component {
   // 异步的放到state中
   state = {
     time: Date.now(),
-    weather: ""
+    weather: "",
   };
   getWeather = async () => {
     const weather = await reqWeather("烟台");
@@ -49,11 +50,12 @@ class Header extends React.Component {
     Modal.confirm({
       title: "你确定要退出吗?",
       onOk: () => {
-        storage.removeUser();
-        memoryStore.user = {};
         clearInterval(this.intervalId);
-        this.props.history.replace("/login");
-      }
+        this.props.logout();
+        // storage.removeUser();
+        // memoryStore.user = {};
+        // this.props.history.replace("/login");
+      },
     });
   };
   componentDidMount() {
@@ -61,16 +63,16 @@ class Header extends React.Component {
     this.getWeather();
   }
   render() {
-    const { user } = memoryStore;
+    // const { user } = memoryStore;
     // const title = this.getTitle();
-    const {title} = this.props.headTitle;
+    const user = this.props.user;
+    const { title } = this.props.headTitle;
     const time = formatDate(this.state.time);
     return (
       <div className="header">
         <div className="header-top">
           <span>欢迎，{user.username}</span>
           <LinkButton onClick={this.logout.bind(this)}>退出</LinkButton>
-          {/* <a href="javascript:void(0);" onClick={this.logout.bind(this)}>退出</a> */}
         </div>
         <div className="header-bottom">
           <div className="header-bottom-left">{title}</div>
@@ -86,8 +88,9 @@ class Header extends React.Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    headTitle: state.headTitle
-  }
-}
+    headTitle: state.headTitle,
+    user: state.user,
+  };
+};
 
-export default connect(mapStateToProps, {})(withRouter(Header));
+export default connect(mapStateToProps, { logout })(withRouter(Header));

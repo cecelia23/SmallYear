@@ -3,15 +3,20 @@
 */
 import storageUtil from "../utils/storageUtil";
 import { combineReducers } from "redux";
-import { SET_HEAD_TITLE } from "./action-type";
+import {
+  SET_HEAD_TITLE,
+  SHOW_ERROR_MSG,
+  RECEIVE_USER,
+  RESET_USER,
+} from "./action-type";
 
 // clock里面或用或不用的函数
-const reducer = function(state, action) {
+const reducer = function (state, action) {
   if (typeof state === "undefined")
     return {
       name: "input context",
       url: "login",
-      count: 0
+      count: 0,
     };
   switch (action.type) {
     case "changeName":
@@ -41,7 +46,7 @@ const headTitle = (state, action) => {
   // 初始化state
   if (typeof state === "undefined") {
     return {
-      title: "首页"
+      title: "首页",
     };
   }
   switch (action.type) {
@@ -59,6 +64,12 @@ const user = (state, action) => {
     return initUser;
   }
   switch (action.type) {
+    case RECEIVE_USER:
+      return action.user;
+    case SHOW_ERROR_MSG:
+      return { ...state, msg: action.data };
+    case RESET_USER:
+      return {};
     default:
       return state;
   }
@@ -67,5 +78,5 @@ const user = (state, action) => {
 export default combineReducers({
   reducer,
   headTitle,
-  user
+  user,
 });

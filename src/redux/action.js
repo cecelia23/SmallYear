@@ -1,4 +1,28 @@
-import { SET_HEAD_TITLE } from "./action-type";
+import { SET_HEAD_TITLE, RECEIVE_USER, SHOW_ERROR_MSG, RESET_USER } from "./action-type";
+import { reqLogin } from "../api";
+import { message } from "antd";
+import storageUtil from "../utils/storageUtil";
+
+export const receiveUser = user => {
+  return {
+    type: RECEIVE_USER,
+    user
+  };
+};
+
+export const showErrorMsg = errorMsg => {
+  return {
+    type: SHOW_ERROR_MSG,
+    data: errorMsg
+  };
+};
+
+export const logout = () => {
+  // 清除localStorage中的数据
+  storageUtil.removeUser();
+  // 返回action对象
+  return {type: RESET_USER};
+}
 
 export const changeName = name => {
   return {
@@ -44,5 +68,23 @@ export const setHeadTitle = title => {
   return {
     type: SET_HEAD_TITLE,
     data: title
+  };
+};
+
+// 异步action
+export const login = (username, password) => {
+  return async dispatch => {
+    // 发送ajax异步请求
+    const result = await reqLogin(username, password);
+    if (result.status === 0) {
+      // message.success("登录成功");
+      // 保存到localStorage
+      storageUtil.setUser(result.user);
+      // 请求成功，调用对应的同步action
+      dispatch(receiveUser(result.user));
+    } else {
+      // 请求失败，调用对应的同步action
+      dispatch(showErrorMsg(result.msg));
+    }
   };
 };
