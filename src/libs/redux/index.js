@@ -8,7 +8,7 @@ export const createStore = (reducer) => {
   function getState() {
     return state;
   }
-   
+
   /*分发action,触发reducer,
    */
   function dispatch(action) {
@@ -39,11 +39,11 @@ export const createStore = (reducer) => {
 */
 export const combineReducers = (reducers) => {
   return (state = {}, action) => {
-      // 对象中所有属性名的数组
-      const newState = Object.keys(reducers).reduce((pre, item) => {
-          pre[item] = reducers[item](state[item], action);
-        return pre;
-      },{});
-      state = newState;
+    // 对象中所有属性名的数组
+    const newState = Object.keys(reducers).reduce((pre, item) => {
+      pre[item] = reducers[item](state[item], action);
+      return pre;
+    }, {});
+    state = newState;
   };
 };

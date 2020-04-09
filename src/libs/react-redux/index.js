@@ -23,7 +23,7 @@ export class Provider extends React.Component {
     return this.props.children;
   }
 }
-// connect高阶组件函数，接受mapStateToProps和mapDispatchToProps两个属性，返回一个高阶组件函数
+// connect高阶组件函数，接受mapStateToProps和mapDispatchToProps两个属性，返回一个高阶组件
 export function connect(mapStateToProps, mapDispatchToProps) {
   // 接受一个UI组件，返回一个容器组件
   return (UIComponent) => {

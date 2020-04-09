@@ -10,7 +10,8 @@ import Role from "../role/role";
 import Bar from "../bar/bar";
 import Line from "../line/line";
 import Pie from "../pie/pie";
-import {connect} from 'react-redux';
+import NotFound from "../not-found/not-found";
+import { connect } from "react-redux";
 import { Layout } from "antd";
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -22,17 +23,20 @@ class Admin extends React.Component {
       return <Redirect to="/login" />;
     }
     return (
-      <Layout style={{minHeight: '100%'}}>
+      <Layout style={{ minHeight: "100%" }}>
         <Sider style={{ backgroundColor: "#9966CC" }}>
           <LeftNav></LeftNav>
         </Sider>
         <Layout>
-          <Header style={{ padding: "0", backgroundColor: "white",height:'88px' }}>
+          <Header
+            style={{ padding: "0", backgroundColor: "white", height: "88px" }}
+          >
             <MyHeader></MyHeader>
           </Header>
           <Content style={{ backgroundColor: "#CCCCFF", minHeight: "500px" }}>
             <Switch>
-              <Route path="/home" component={ Home}>
+              <Redirect exact from="/" to="/home" />
+              <Route path="/home" component={Home}>
                 {/* <Home /> */}
               </Route>
               <Route path="/category">
@@ -56,7 +60,7 @@ class Admin extends React.Component {
               <Route path="/chart/pie">
                 <Pie />
               </Route>
-              <Redirect to='/home' />
+              <Route component={NotFound} />
             </Switch>
           </Content>
           <Footer>后台管理系统 in react</Footer>
@@ -68,7 +72,7 @@ class Admin extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user
-  }
-}
+    user: state.user,
+  };
+};
 export default connect(mapStateToProps, {})(Admin);
