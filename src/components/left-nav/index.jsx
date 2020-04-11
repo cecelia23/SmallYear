@@ -37,7 +37,7 @@ class LeftNav extends React.Component {
       return false;
     }
   };
-  // array.map() + 递归
+  // array.map(menu) + 递归
   getMenuNode = menu => {
     let path = this.props.location.pathname;
 
@@ -88,7 +88,7 @@ class LeftNav extends React.Component {
         );
       } else {
         const cItem = item.children.find(
-          cIterm => this.props.location.pathname.indexOf(cIterm.key) === 0
+          cItem => this.props.location.pathname.indexOf(cItem.key) === 0
         );
         if (cItem) {
           this.openKey = item.key;
